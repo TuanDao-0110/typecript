@@ -26,4 +26,6 @@ const createNewUser = (user: User): User => {
   return user;
 };
 console.log(createNewUser({ name: "tuan", email: "tuan@gmail.com", isActive: true }));
+
+// 
 export {};
