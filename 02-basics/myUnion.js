@@ -28,5 +28,5 @@ var getDbId = function (id) {
 var data = [2, "4", 4, 5, true];
 // 3. 
 var seatAllotment;
-// seatAllotment = 'left'
+seatAllotment = 'left';
 console.log(seatAllotment);
