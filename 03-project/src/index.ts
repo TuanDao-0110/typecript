@@ -24,6 +24,7 @@ class SubUser extends User {
     changeCourseCount (){
         this._courseCount = 4
     }
+   
 }
 
 const newUser = new User("emai", "name", "4");
@@ -31,5 +32,7 @@ const newUser = new User("emai", "name", "4");
 // newUser.city = '4'
 // 2. cannot access: because of private
 // newUser.city
+
+
 
  

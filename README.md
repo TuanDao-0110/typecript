@@ -16,3 +16,19 @@
 1. Object type
 2. Function type
 3. Type vs Interface
+4. Array
+
+## 03 _ set up project: 
+1. create tsconfig.json, package.json, 
+2. using terminal to set up watching 
+``` 
+tsc -w
+```
+3. class 
+4. apply interface to class. 
+    4.1. protected
+    4.2. readonly
+    4.3. private
+    4.4. public
+5. abstract class. 
+6. 
