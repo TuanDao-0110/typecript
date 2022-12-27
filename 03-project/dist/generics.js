@@ -16,4 +16,11 @@ identityThree(4);
 const identityFour = (val) => {
     return val;
 };
-// 3. define by inteface: 
+// 3.
+const getSearchProduct = (val) => {
+    const index = 2;
+    return val;
+};
+const getMoreSearchProduct = (val) => {
+    return val;
+};

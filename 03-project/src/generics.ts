@@ -18,4 +18,11 @@ const identityFour = <T>(val: T): T => {
   return val;
 };
 
-// 3. define by inteface: 
+// 3.
+const getSearchProduct = <Take>(val: Take[]): Take[] => {
+  const index = 2;
+  return val;
+};
+const getMoreSearchProduct = <T>(val: T[]): T[] => {
+  return val;
+};
