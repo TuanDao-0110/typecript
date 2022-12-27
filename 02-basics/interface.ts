@@ -8,16 +8,18 @@ interface User {
   startTrail(): string;
   getCoupond(couponname: string, value: number): number;
 }
-
+// 1. add new feature:
 interface User {
   githubToken: string;
 }
-interface User {
-    
+// 2. extend new interface from User
+interface Admin extends User {
+  role: "admin" | "ta" | "learner";
 }
-// 1. apply to new variable
+// 3. apply to new variable
 
-const newUser: User = {
+const newUser: Admin = {
+  role: "admin",
   dbId: 3,
   email: "h@h.co",
   userId: 4,
