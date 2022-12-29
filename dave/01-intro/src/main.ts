@@ -78,10 +78,14 @@ logStudentKey(student1, "GPA");
 
 type Stream = "salary" | "bonus" | "sidehustle";
 // Record will be use to store all key, and return value type
-type Incomes = Record<Stream, number|string>;
+type Incomes = Record<Stream, number | string>;
 
 let incomes: Incomes = {
-  bonus:4,
+  bonus: 4,
   salary: 4,
-  sidehustle: '4',
+  sidehustle: "4",
 };
+
+for (let i in incomes) {
+  console.log(incomes[i as keyof typeof incomes]);
+}

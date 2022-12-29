@@ -40,5 +40,8 @@ logStudentKey(student1, "GPA");
 let incomes = {
     bonus: 4,
     salary: 4,
-    sidehustle: '4',
+    sidehustle: "4",
 };
+for (let i in incomes) {
+    console.log(incomes[i]);
+}
