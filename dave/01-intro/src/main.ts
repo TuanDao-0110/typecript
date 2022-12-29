@@ -1,17 +1,21 @@
+type stringOrNumber = string | number;
 type Guitarist = {
-  name: string;
+  name?: string;
   active: boolean;
-  player?: (number | string)[];
+  albums: stringOrNumber;
 };
-let guitar1: Guitarist = {
-  name: "player",
-  active: true,
-};
-enum Grade {
-  U = 10,
-  D = "1",
-  C = "time",
-  B = "not",
-  A = 5,
+
+interface PostId {
+  number?: number;
+  name: "tuan" | "chau";
 }
-console.log(Grade["U"]);
+
+let post1: PostId = {
+  number: 1,
+  name: "tuan",
+};
+
+// fn :
+const add = (a: number, b: number): number => {
+  return b + a;
+};

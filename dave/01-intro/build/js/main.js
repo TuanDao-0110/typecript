@@ -1,14 +1,9 @@
 "use strict";
-let guitar1 = {
-    name: "player",
-    active: true,
+let post1 = {
+    number: 1,
+    name: "tuan",
 };
-var Grade;
-(function (Grade) {
-    Grade[Grade["U"] = 10] = "U";
-    Grade["D"] = "1";
-    Grade["C"] = "time";
-    Grade["B"] = "not";
-    Grade[Grade["A"] = 5] = "A";
-})(Grade || (Grade = {}));
-console.log(Grade["U"]);
+// fn :
+const add = (a, b) => {
+    return b + a;
+};
