@@ -1,2 +1,5 @@
 "use strict";
-let myName = 'tuan';
+let guitar1 = {
+    name: "player",
+    active: true,
+};
