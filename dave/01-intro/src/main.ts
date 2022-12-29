@@ -1,62 +1,48 @@
-type stringOrNumber = string | number;
-type Guitarist = {
-  name?: string;
-  active: boolean;
-  albums: stringOrNumber;
+type One = string;
+type Two = string | number;
+type Three = "hello";
+let a: One = "a";
+let b = a as Two; // less specific
+let c = a as Three; // more specific
+let d = <One>"world";
+let e = <string | number>"world";
+const addOrConcat = (a: number, b: number, c: "add" | "concat"): number | string => {
+  if (c === "add") {
+    return a + b;
+  }
+  return "" + a + b;
 };
+// we know that addOrConcat will return as string .
+// ==> so we use  'as string' to specify type of fn.
+// ==> so we will assume that fn will return only string event it can be number|string.
 
-interface PostId {
-  number?: number;
-  name: "tuan" | "chau";
-}
+let myVal: string = addOrConcat(2, 2, "concat") as string;
+//1. be careful that fn may return a string:
+let nexVal: number = addOrConcat(2, 2, "concat") as number;
 
-let post1: PostId = {
-  number: 1,
-  name: "tuan",
-};
+console.log(myVal);
 
-// fn :
-const add = (a: number, b: number): number => {
-  return b + a;
-};
+//2. the DOM :
+const img = document.querySelector("img") as HTMLImageElement;
+//  but we can write:
+const myImg = <HTMLImageElement>document.querySelector("#img"); // we can not write in .tjs file
 
-// type vs interface fn
-interface mathFn {
-  (a: number, b: number): number;
-}
+img.src = "url"; // TS know that img is tag image that why they offer us more query on image tag
 
-let multiply: mathFn = (a, b) => {
-  return 4;
-};
+// 1s variation:
+// let year: HTMLElement | null;
+// year = document.querySelector("year");
+// let thisYear: string;
+// thisYear = new Date().getFullYear().toString();
+// if (year) {
+//   year.setAttribute("datetime", thisYear);
+//   year.textContent = thisYear;
+// }
 
-console.log(multiply(4, 4));
+// 2nd variation
 
-const addAll = (a: number = 10, b: number, c = 4): number => {
-  return a + b + c;
-};
+let year = document.querySelector("year") as HTMLElement;
 
-console.log(addAll(undefined, 3));
-
-// Rest Parameter:
-
-const total = (...nums: number[]): number => {
-  return nums.reduce((prev, curr) => {
-    return prev + curr;
-  });
-};
-
-console.log(total(2, 4, 5, 10));
-
-// never fn
-const createError = (errMsg: string): never => {
-  throw new Error(errMsg);
-};
-
-const numberOrString = (val: number | string): string => {
-  if (typeof val === "string") return "val";
-  //   return createError("this should be string");
-  // not like this
-  return createError("use string");
-};
-
-console.log(numberOrString(4));
+let thisYear: string = new Date().getFullYear().toString();
+year.setAttribute("datetime", thisYear);
+year.textContent = thisYear;
