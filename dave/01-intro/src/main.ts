@@ -19,3 +19,15 @@ let post1: PostId = {
 const add = (a: number, b: number): number => {
   return b + a;
 };
+
+// type vs interface fn 
+interface mathFn {
+  (a: number, b: number): number;
+}
+
+
+let multiply: mathFn = (a, b) => {
+  return 4;
+};
+
+console.log(multiply(4, 4));
