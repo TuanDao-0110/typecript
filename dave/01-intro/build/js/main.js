@@ -1,47 +1,50 @@
 "use strict";
-const todayTransaction = {
-    Pizza: -10,
-    Books: -5,
-    Job: 50,
+const stringEcho = (arg) => {
+    return arg;
 };
-const pizza = "Pizza";
-const newOrder = [];
-newOrder.push({ data: 4 }, { data1: 5, data3: 5 });
-newOrder[0] = { data4: 5 };
-console.log(newOrder);
-console.log(todayTransaction[pizza]);
-const student1 = {
-    name: "tuan",
-    GPA: 4,
+const isObject = (arg) => {
+    return typeof arg === "object" && !Array.isArray(arg) && arg !== null;
 };
-const student2 = {
-    name: "tuan",
-    GPA: 4,
-    classes: [4, 5],
+const isTrue = (arg) => {
+    if (Array.isArray(arg) && !arg.length)
+        return { value: arg, is: false };
+    if (isObject(arg) && !Object.keys(arg).length)
+        return { value: arg, is: false };
+    return { value: arg, is: !!arg };
 };
-for (const key in student1) {
-    //   console.log(`${key} : ${student1[key as keyof Student]}`);
+const processUser = (user) => {
+    // process user logic
+    return user;
+};
+class NewUser {
+    constructor(id, name) {
+        this.id = id;
+        this.name = name;
+    }
 }
-Object.keys(student1).map((key) => {
-    // this return as key of this student 1 type
-    //  --> TS will know that key in this case is Key of student1
-    console.log(student1[key]);
-});
-//3.  combime to function
-const logStudentKey = (student, 
-// we can write like this:
-key
-// or we can write: --> it will back straight to parent type to define the key
-//   key: keyof Student
-) => {
-    console.log(`student key ${key}: ${student[key]}`);
+const user1 = new NewUser(4, "tuan");
+//5. extend and keyof
+// --> fn with have return type is array type of T with key value K extend from T
+const getUseProperty = (users, key) => {
+    return users.map((user) => user[key]);
 };
-logStudentKey(student1, "GPA");
-let incomes = {
-    bonus: 4,
-    salary: 4,
-    sidehustle: "4",
-};
-for (let i in incomes) {
-    console.log(incomes[i]);
+console.log(getUseProperty([
+    { id: 4, name: "tuan" },
+    { id: 5, name: "long" },
+    { id: 7, name: "jay" },
+], "name"));
+// 6. class with generic:
+class StateObject {
+    constructor(data) {
+        this.data = data;
+    }
+    get state() {
+        return this.data;
+    }
+    set state(value) {
+        this.data = value;
+    }
 }
+const store = new StateObject(["tuan", "job"]);
+store.state = ["4", "hei"];
+console.log(store.state);

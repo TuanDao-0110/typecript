@@ -1,91 +1,75 @@
-// // index signatures:
-// interface Transaction {
-//   Pizza: number;
-//   Books: number;
-//   Job: number;
-// }
-//1. introduction of index signature
-interface Transaction {
-  // we define all index inside object interface is string vs value is number
-  //   all the variable will be string with return type is number
-  readonly [index: string]: number;
-  //   Pizza: number;
-  //   Books: number;
-  //   Job: number;
-}
-const todayTransaction: Transaction = {
-  Pizza: -10,
-  Books: -5,
-  Job: 50,
+const stringEcho = <T>(arg: T): T => {
+  return arg;
 };
-const pizza: string = "Pizza";
 
-const newOrder: Transaction[] = [];
-newOrder.push({ data: 4 }, { data1: 5, data3: 5 });
-newOrder[0] = { data4: 5 };
-console.log(newOrder);
-console.log(todayTransaction[pizza]);
+const isObject = <T>(arg: T): boolean => {
+  return typeof arg === "object" && !Array.isArray(arg) && arg !== null;
+};
+// 2. set up return type
+// const isTrue = <T>(arg: T): { arg: T; is: boolean } => {
+//   if (Array.isArray(arg) && !arg.length) return { arg, is: false };
+//   if (isObject(arg) && !Object.keys(arg as keyof T).length) return { arg, is: false };
+//   return { arg, is: !!arg };
+// };
 
-//2. without index signature
+// isTrue({ data: 1, data2: 3 });
 
-interface Student {
-  //   [key: string]: string | number | number[] | undefined;
-  name: string;
-  GPA: number;
-  //   we use undefined becuase may be we dont create it in object --> that why value maybe underfined
-  classes?: number[];
+// 3.inteface and generic
+interface BoolCheck<T> {
+  value: T;
+  is: boolean;
+}
+const isTrue = <T>(arg: T): BoolCheck<T> => {
+  if (Array.isArray(arg) && !arg.length) return { value: arg, is: false };
+  if (isObject(arg) && !Object.keys(arg as keyof T).length) return { value: arg, is: false };
+  return { value: arg, is: !!arg };
+};
+// 4.set up with interface
+
+interface HasId {
+  id: number;
 }
 
-const student1: Student = {
-  name: "tuan",
-  GPA: 4,
+const processUser = <T extends HasId>(user: T): T => {
+  // process user logic
+
+  return user;
 };
 
-const student2: Student = {
-  name: "tuan",
-  GPA: 4,
-  classes: [4, 5],
-};
-
-for (const key in student1) {
-  //   console.log(`${key} : ${student1[key as keyof Student]}`);
+class NewUser implements HasId {
+  constructor(public id: number, public name: string) {}
 }
 
-Object.keys(student1).map((key) => {
-  // this return as key of this student 1 type
-  //  --> TS will know that key in this case is Key of student1
-  console.log(student1[key as keyof typeof student1]);
-});
+const user1 = new NewUser(4, "tuan");
 
-//3.  combime to function
-const logStudentKey = (
-  student: Student,
-  // we can write like this:
-  key: keyof typeof student
-  // or we can write: --> it will back straight to parent type to define the key
-  //   key: keyof Student
-): void => {
-  console.log(`student key ${key}: ${student[key]}`);
+//5. extend and keyof
+// --> fn with have return type is array type of T with key value K extend from T
+const getUseProperty = <T extends HasId, K extends keyof T>(users: T[], key: K): T[K][] => {
+  return users.map((user) => user[key]);
 };
+console.log(
+  getUseProperty(
+    [
+      { id: 4, name: "tuan" },
+      { id: 5, name: "long" },
+      { id: 7, name: "jay" },
+    ],
+    "name"
+  )
+);
 
-logStudentKey(student1, "GPA");
+// 6. class with generic:
 
-// 4.
-
-// interface Incomes {
-//   [key: string]: number;
-// }
-
-type Stream = "salary" | "bonus" | "sidehustle";
-// Record will be use to store all key, and return value type
-type Incomes = Record<Stream, number | string>;
-
-let incomes: Incomes = {
-  bonus: 4,
-  salary: 4,
-  sidehustle: "4",
-};
-
-for (let i in incomes) {
-  console.log(incomes[i as keyof typeof incomes]);
+class StateObject<T> {
+  constructor(private data: T) {}
+  get state(): T {
+    return this.data;
+  }
+  set state(value: T) {
+    this.data = value;
+  }
 }
+
+const store = new StateObject<(string | number | object)[]>(["tuan", "job"]);
+store.state = ["4", "hei"];
+console.log(store.state);
