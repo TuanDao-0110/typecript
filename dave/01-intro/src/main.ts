@@ -1,75 +1,136 @@
-const stringEcho = <T>(arg: T): T => {
-  return arg;
-};
+// utility type:
 
-const isObject = <T>(arg: T): boolean => {
-  return typeof arg === "object" && !Array.isArray(arg) && arg !== null;
-};
-// 2. set up return type
-// const isTrue = <T>(arg: T): { arg: T; is: boolean } => {
-//   if (Array.isArray(arg) && !arg.length) return { arg, is: false };
-//   if (isObject(arg) && !Object.keys(arg as keyof T).length) return { arg, is: false };
-//   return { arg, is: !!arg };
-// };
-
-// isTrue({ data: 1, data2: 3 });
-
-// 3.inteface and generic
-interface BoolCheck<T> {
-  value: T;
-  is: boolean;
+// 1.partial:
+interface Assigment {
+  [index: string]: string | number | boolean | undefined;
+  studentId: string;
+  title: string;
+  grade: number;
+  verified?: boolean;
 }
-const isTrue = <T>(arg: T): BoolCheck<T> => {
-  if (Array.isArray(arg) && !arg.length) return { value: arg, is: false };
-  if (isObject(arg) && !Object.keys(arg as keyof T).length) return { value: arg, is: false };
-  return { value: arg, is: !!arg };
-};
-// 4.set up with interface
 
-interface HasId {
+const updateAssigment = (
+  // assign type:
+  assign: Assigment,
+  // property to update
+  propsToUpdate: Partial<Assigment>
+): // return type
+Assigment => {
+  return { ...assign, ...propsToUpdate };
+};
+
+const assign1: Assigment = {
+  studentId: "abc",
+  title: "final project",
+  grade: 0,
+  //   verified: true,
+};
+
+console.log(updateAssigment(assign1, { grade: 95 }));
+// 2. readonnly and required
+const recordAssigment = (
+  // all property need to require
+  assign: Required<Assigment>
+): Assigment => {
+  return assign;
+};
+console.log(recordAssigment({ grade: 4, studentId: "4", title: "not", verified: true }));
+// we can not do like --> becuase it still think that verified is missing event we already add it
+// console.log(recordAssigment(assign1))
+console.log(recordAssigment({ ...assign1, verified: true }));
+const assignVerify: Readonly<Assigment> = {
+  ...assign1,
+  verified: true,
+};
+
+// 3. record :
+const hexColorMap: Record<string, string> = {
+  red: "FF0000",
+  green: "00FF00",
+  blue: "0000FF",
+};
+
+type Student = "Sara" | "Kelly";
+type LetterGrade = "A" | "B" | "C" | "D" | "U";
+// now we can set up as key is student vs value is Letter by using Record
+const finalGrade: Record<Student, LetterGrade> = {
+  Kelly: "A",
+  Sara: "D",
+};
+
+interface Grade {
+  assign1: number;
+  assign2: number;
+}
+
+const gradeData: Record<Student, Grade> = {
+  Kelly: { assign1: 4, assign2: 4 },
+  Sara: { assign1: 4, assign2: 5 },
+};
+
+// 4. pick vs omit :
+// 4.1 now we picking
+
+type AssignResult = Pick<Assigment, "title" | "studentId">;
+const score: AssignResult = {
+  studentId: "d",
+  title: "4",
+};
+
+// 4.1 we omit ->
+interface Todo {
+  title: string;
+  description: string;
+  completed: boolean;
+  createdAt: number;
+}
+
+type TodoPreview = Omit<Todo, "description">;
+
+const todo: TodoPreview = {
+  title: "Clean room",
+  completed: false,
+  createdAt: 44,
+};
+console.log(todo);
+
+// exclude vs extract
+// nonnullable:
+type AllPossibleGrade = "Dave" | "John" | "Anna" | null | undefined;
+type NamesOnly = NonNullable<AudioListener>;
+
+// return type :
+
+// type newAssign = { title: string; points: number };
+const creatNewAssign = (title: string, points: number) => {
+  return { title, points };
+};
+
+type NewAssign = ReturnType<typeof creatNewAssign>;
+
+// parameter:
+type AssignParams = Parameters<typeof creatNewAssign>;
+const assinArg: AssignParams = ["title", 4];
+
+const assignArg1: AssignParams = ["title2", 10];
+
+// await: help us with return type is promise
+interface User {
   id: number;
+  name: string;
+  username: string;
+  email: string;
 }
-
-const processUser = <T extends HasId>(user: T): T => {
-  // process user logic
-
-  return user;
+// return type is a Promise with type of User
+const fetchUser = async (): Promise<User[]> => {
+  const data = await fetch("")
+    .then((res) => res.json())
+    .catch((error) => {
+      if (error instanceof Error) return console.log(error);
+    });
+  return data;
 };
 
-class NewUser implements HasId {
-  constructor(public id: number, public name: string) {}
-}
+type FetchUserReturnType = Awaited<ReturnType<typeof fetchUser>>;
 
-const user1 = new NewUser(4, "tuan");
-
-//5. extend and keyof
-// --> fn with have return type is array type of T with key value K extend from T
-const getUseProperty = <T extends HasId, K extends keyof T>(users: T[], key: K): T[K][] => {
-  return users.map((user) => user[key]);
-};
-console.log(
-  getUseProperty(
-    [
-      { id: 4, name: "tuan" },
-      { id: 5, name: "long" },
-      { id: 7, name: "jay" },
-    ],
-    "name"
-  )
-);
-
-// 6. class with generic:
-
-class StateObject<T> {
-  constructor(private data: T) {}
-  get state(): T {
-    return this.data;
-  }
-  set state(value: T) {
-    this.data = value;
-  }
-}
-
-const store = new StateObject<(string | number | object)[]>(["tuan", "job"]);
-store.state = ["4", "hei"];
-console.log(store.state);
+fetchUser().then((user) => console.log(user));
