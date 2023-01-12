@@ -8,8 +8,8 @@ function App() {
 
   return (
     <div>
-      <Heading title={"hello"} />
-      <Section title="different title">children</Section>
+      <Heading title="hello" />
+      <Section >children</Section>
       <Counter children={count} setCount={setCount}></Counter>
       <List items={["hello", "new"]} render={(item: string) => <span> {item}</span>} />
     </div>

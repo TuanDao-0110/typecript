@@ -9,6 +9,15 @@ interface Assigment {
   verified?: boolean;
 }
 
+let key = 4;
+const assignment_1: Assigment = {
+  grade: 4,
+  studentId: "string",
+  title: "string",
+  verified: true,
+};
+
+
 const updateAssigment = (
   // assign type:
   assign: Assigment,
@@ -54,7 +63,7 @@ type Student = "Sara" | "Kelly";
 type LetterGrade = "A" | "B" | "C" | "D" | "U";
 // now we can set up as key is student vs value is Letter by using Record
 const finalGrade: Record<Student, LetterGrade> = {
-  Kelly: "A",
+  Kelly: "B",
   Sara: "D",
 };
 
@@ -73,8 +82,8 @@ const gradeData: Record<Student, Grade> = {
 
 type AssignResult = Pick<Assigment, "title" | "studentId">;
 const score: AssignResult = {
-  studentId: "d",
-  title: "4",
+  studentId: "string",
+  title: "string",
 };
 
 // 4.1 we omit ->
