@@ -1,0 +1,29 @@
+{
+    "products": [
+        {
+            "sku": "12345",
+            "name": "Product 1",
+            "price": 49.99
+        },
+        {
+            "sku": "23456",
+            "name": "Product 2",
+            "price": 59.99
+        },
+        {
+            "sku": "34567",
+            "name": "Product 3",
+            "price": 69.99
+        },
+        {
+            "sku": "45678",
+            "name": "Product 4",
+            "price": 79.99
+        },
+        {
+            "sku": "56789",
+            "name": "Product 5",
+            "price": 89.99
+        }
+    ]
+}
