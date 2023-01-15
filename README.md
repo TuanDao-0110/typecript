@@ -32,3 +32,17 @@ tsc -w
     4.4. public
 5. abstract class. 
 6. 
+
+## lesson12 
+
+1. set up project
+
+## lesson13
+
+1. useState and set Type
+
+## lesson 14 
+
+1. useReducer, Payload, Action set up in typescript.
+2. using enum in Action.
+

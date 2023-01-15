@@ -9,9 +9,9 @@ function App() {
   return (
     <div>
       <Heading title="hello" />
-      <Section >children</Section>
+      <Section>children</Section>
       <Counter children={count} setCount={setCount}></Counter>
-      <List items={["hello", "new"]} render={(item: string) => <span> {item}</span>} />
+      <List items={["hello", "name"]} render={(item: string) => <span> {item}</span>} />
     </div>
   );
 }
