@@ -11,22 +11,23 @@ export type CartItemType = {
 type CartStateType = {
   cart: CartItemType[];
 };
+// 3. set up state which is type CartStateType
 const initCartState: CartStateType = { cart: [] };
-
+// 4. create enum Action
 enum REDUCER_ACTION_TYPE {
   ADD,
   REMOVE,
   QUANTITY,
   SUBMIT,
 }
-
+// 5. 
 export type ReducerActionType = typeof REDUCER_ACTION_TYPE;
-
+// 6. set up type of reducer action include type vs action
 export type ReducerAction = {
   type: REDUCER_ACTION_TYPE;
   payload?: CartItemType;
 };
-
+// 7. create reducer and handle with action
 const reducer = (state: CartStateType, action: ReducerAction): CartStateType => {
   switch (action.type) {
     case REDUCER_ACTION_TYPE.ADD: {
@@ -61,7 +62,7 @@ const reducer = (state: CartStateType, action: ReducerAction): CartStateType => 
     case REDUCER_ACTION_TYPE.REMOVE: {
       if (!action.payload) {
         throw new Error("action payload missing in remove");
-      }
+       }
       const { sku, name, price } = action.payload;
       //   1. find  item not  in add
       const filteredCart: CartItemType[] = state.cart.filter((item) => item.sku !== sku);
@@ -74,7 +75,7 @@ const reducer = (state: CartStateType, action: ReducerAction): CartStateType => 
       throw new Error("unidefined action");
   }
 };
-
+// 8. use reducer to add to hook useReducer vs return many 
 const useCartContext = (initCartState: CartStateType) => {
   const [state, dispatch] = useReducer(reducer, initCartState);
   const REDUCER_ACTIONS = useMemo(() => {
@@ -96,8 +97,9 @@ const useCartContext = (initCartState: CartStateType) => {
   });
   return { dispatch, REDUCER_ACTIONS, totalItems, totalPrice, cart };
 };
+// 9. final create type of context with have a type like useCartContext
 export type UseCartContextType = ReturnType<typeof useCartContext>;
-
+// 10. because now create value for it before use createContext
 const initCartContextState: UseCartContextType = {
   dispatch: () => {},
   REDUCER_ACTIONS: REDUCER_ACTION_TYPE,
@@ -105,11 +107,11 @@ const initCartContextState: UseCartContextType = {
   totalPrice: "",
   cart: [],
 };
-
+// 11. now set up a CartContext
 export const CartContext = createContext<UseCartContextType>(initCartContextState);
-
+// 12. set up type for children element:
 type ChildrenType = { children?: ReactElement | ReactElement[] };
-
+// 13. set up Provider
 export const CartProvider = ({ children }: ChildrenType): ReactElement => {
   return <CartContext.Provider value={useCartContext(initCartContextState)}>{children}</CartContext.Provider>;
 };
